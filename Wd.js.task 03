@@ -1,0 +1,58 @@
+let display = document.getElementById('display');
+let clearButton = document.getElementById('clear');
+let backspaceButton = document.getElementById('backspace');
+let equalsButton = document.getElementById('equals');
+
+let firstNumber = '';
+let secondNumber = '';
+let operation = '';
+
+clearButton.addEventListener('click', () => {
+	firstNumber = '';
+	secondNumber = '';
+	operation = '';
+	display.value = '';
+});
+
+backspaceButton.addEventListener('click', () => {
+	if (operation === '') {
+		firstNumber = firstNumber.slice(0, -1);
+		display.value = firstNumber;
+	} else {
+		secondNumber = secondNumber.slice(0, -1);
+		display.value = secondNumber;
+	}
+});
+
+equalsButton.addEventListener('click', () => {
+	if (operation === '+') {
+		let result = parseFloat(firstNumber) + parseFloat(secondNumber);
+		display.value = result;
+	} else if (operation === '-') {
+		let result = parseFloat(firstNumber) - parseFloat(secondNumber);
+		display.value = result;
+	} else if (operation === '*') {
+		let result = parseFloat(firstNumber) * parseFloat(secondNumber);
+		display.value = result;
+	} else if (operation === '/') {
+		let result = parseFloat(firstNumber) / parseFloat(secondNumber);
+		display.value = result;
+	}
+});
+
+document.addEventListener('click', (e) => {
+	if (e.target.tagName === 'BUTTON') {
+		let buttonValue = e.target.textContent;
+		if (buttonValue >= '0' && buttonValue <= '9' || buttonValue === '.') {
+			if (operation === '') {
+				firstNumber += buttonValue;
+				display.value = firstNumber;
+			} else {
+				secondNumber += buttonValue;
+				display.value = secondNumber;
+			}
+		} else if (buttonValue === '+' || buttonValue === '-' || buttonValue === '*' || buttonValue === '/') {
+			operation = buttonValue;
+		}
+	}
+});
